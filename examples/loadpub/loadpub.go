@@ -15,6 +15,7 @@ var (
 	messageSize = flag.Int("size", 1024, "message size")
 	topic = flag.String("topic", "topic_load", "topic name")
 	namespace = flag.String("namespace", "ns1", "topic namespace")
+	publisher = flag.String("publisher", "loadpub", "publisher identification")
 )
 
 func main() {
@@ -27,7 +28,7 @@ func main() {
 		return
 	}
 
-	pub, err := mc.NewPublisher(*namespace, *topic)
+	pub, err := mc.NewPublisher(*publisher, *namespace, *topic)
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
 		return

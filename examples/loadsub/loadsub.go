@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"sync/atomic"
 	"time"
 
 	"github.com/chrislusf/seaweedfs/weed/messaging/client"
@@ -59,10 +60,13 @@ func main() {
 	}()
 
 	sub.Subscribe(func(m *messaging_pb.Message) {
-		totalCount++
-		totalSize += int64(len(m.Value))
-		finalCount++
-		finalSize += int64(len(m.Value))
+		atomic.AddInt64(&totalCount, 1)
+		atomic.AddInt64(&totalSize, int64(len(m.Value)))
+		atomic.AddInt64(&finalCount, 1)
+		atomic.AddInt64(&finalSize, int64(len(m.Value)))
 	})
+
+	// wait for ever
+	select {}
 
 }

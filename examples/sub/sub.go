@@ -23,4 +23,6 @@ func main() {
 	sub.Subscribe(func(m *messaging_pb.Message) {
 		fmt.Printf("> %s\n", string(m.Value))
 	})
+
+	select {}
 }

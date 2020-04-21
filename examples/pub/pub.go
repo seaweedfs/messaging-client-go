@@ -16,7 +16,7 @@ func main() {
 		return
 	}
 
-	pub, err := mc.NewPublisher("ns1", "topic1")
+	pub, err := mc.NewPublisher("publisher1", "ns1", "topic1")
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
 		return
