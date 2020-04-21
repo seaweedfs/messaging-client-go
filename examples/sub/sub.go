@@ -13,14 +13,12 @@ func main() {
 		fmt.Printf("err: %v\n", err)
 		return
 	}
-	defer mc.Shutdown()
 
 	sub, err := mc.NewSubscriber("subscriber1", "ns1", "topic1")
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
 		return
 	}
-	defer sub.Shutdown()
 
 	sub.Subscribe(func(m *messaging_pb.Message) {
 		fmt.Printf("> %s\n", string(m.Value))

@@ -15,24 +15,22 @@ func main() {
 		fmt.Printf("err: %v\n", err)
 		return
 	}
-	defer mc.Shutdown()
 
 	pub, err := mc.NewPublisher("ns1", "topic1")
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
 		return
 	}
-	defer pub.Shutdown()
 
 	for _, t := range strings.Split(text, "\n") {
-		if err = pub.Publish(&messaging_pb.RawData{
+		if err = pub.Publish(&messaging_pb.Message{
 			Key:     nil,
 			Value:   []byte(t),
 			Headers: nil,
 		}); err != nil {
 			println("err:", err.Error())
 		} else {
-			println("    ", t)
+			println(t)
 		}
 	}
 	time.Sleep(time.Second)
