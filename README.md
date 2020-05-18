@@ -9,9 +9,9 @@ weed server -filer
 weed msg.broker
 ```
 
-The message queue in SeaweedFS is conceptually a remote FIFO file. It can be rewinded at any time, addressed by nano-secondtimestamp.
+The message queue in SeaweedFS is conceptually a remote FIFO file. It can be rewinded at any time, addressed by nano-second timestamp.
 
-There are 2 examples: 
+There are 2 kinds of examples in this repo: 
 * Network channel for Go.
 * Pub/Sub to a distributed persisted message queue.
 
