@@ -92,6 +92,13 @@ func main() {
 
 Note: The data in the channel can be read multiple times.
 
+After consuming the data, since the messages in the channel is a persisted, you need to delete it explicitly:
+
+```
+  mc.DeleteChannel("some_chan")
+
+```
+
 ## Pub/Sub to a distributed persisted message queue
 
 The pub/sub example is also simple. The difference from channel is that message queue can not be closed.
@@ -135,3 +142,10 @@ The pub/sub example is also simple. The difference from channel is that message 
 ```
 
 The read can be rewinded to any timestamp.
+
+After consuming the data, since the messages in the message queue is a persisted, you need to delete it explicitly:
+
+```
+  mc.DeleteTopic("ns1", "topic1")
+
+```
