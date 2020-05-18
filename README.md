@@ -19,7 +19,7 @@ There are 2 kinds of examples in this repo:
 
 Originally Go has a netchan package, but it is found hard to implement. Here is just one way to implement it.
 
-For Go, the best tutorial is the source code
+For Go, the best tutorial is the source code.
 
 ### Network Channel to write
 ```
