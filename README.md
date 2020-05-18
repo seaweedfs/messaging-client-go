@@ -36,8 +36,10 @@ import (
 
 func main()  {
 
+	// connect to message broker via gRPC
 	mc := msgclient.NewMessagingClient("localhost:17777")
 
+	// write to this channel.
 	pubChan, err := mc.NewPubChannel("some_chan")
 	if err != nil {
 		log.Fatalf("fail to create publish channel: %v\n", err)
@@ -56,32 +58,31 @@ var text = "..."
 Note: If the channel is closed, new writes will be rejected.
 
 ### Network Channel to read
+
+
+
 ```
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
 
 	"github.com/chrislusf/seaweedfs/weed/messaging/msgclient"
 )
 
-var (
-	subSubscriberId = flag.String("subscriberId", "sub1", "a unique subscriber id for persisting progress")
-)
-
 func main() {
-
-	flag.Parse()
 
 	mc := msgclient.NewMessagingClient("localhost:17777")
 
-	subChan, err := mc.NewSubChannel(*subSubscriberId, "some_chan")
+	// connect to channel
+	// the channel to read does not need to exist beforehand.
+	subChan, err := mc.NewSubChannel("subscriber1", "some_chan")
 	if err != nil {
 		log.Fatalf("fail to create publish channel: %v\n", err)
 	}
 
+	// loop the data until the channel is closed by the publishing program
 	for m := range subChan.Channel() {
 		fmt.Println(string(m))
 	}
