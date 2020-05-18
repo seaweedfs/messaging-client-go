@@ -6,28 +6,26 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/chrislusf/seaweedfs/weed/messaging/client"
+	"github.com/chrislusf/seaweedfs/weed/messaging/msgclient"
 	"github.com/chrislusf/seaweedfs/weed/pb/messaging_pb"
-	"github.com/chrislusf/seaweedfs/weed/util"
+	"github.com/chrislusf/seaweedfs/weed/util/grace"
 )
 
 var (
 	topic      = flag.String("topic", "topic_load", "topic name")
 	namespace  = flag.String("namespace", "ns1", "topic namespace")
-	subscriber = flag.String("subscriber", "loadsub", "subscriber identification")
+	subscriber = flag.String("subscriber", "topic_load", "subscriber identification")
+	partitionId = flag.Int("partitionId", -1, "partition id")
+	subStart     = flag.Duration("timeAgo", 0, "start time before now. \"300ms\", \"1.5h\" or \"2h45m\". Valid time units are \"ns\", \"us\" (or \"µs\"), \"ms\", \"s\", \"m\", \"h\"")
 )
 
 func main() {
 
 	flag.Parse()
 
-	mc, err := client.NewMessagingClient([]string{"localhost:9777"})
-	if err != nil {
-		fmt.Printf("err: %v\n", err)
-		return
-	}
+	mc := msgclient.NewMessagingClient("localhost:17777")
 
-	sub, err := mc.NewSubscriber("subscriber1", *namespace, *topic)
+	sub, err := mc.NewSubscriber("subscriber1", *namespace, *topic, *partitionId, time.Now().Add(-*subStart))
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
 		return
@@ -35,10 +33,11 @@ func main() {
 
 	var finalCount, finalSize int64
 	var isStopping bool
-	util.OnInterrupt(func() {
+	grace.OnInterrupt(func() {
 		isStopping = true
 		fmt.Printf("message count: %d\n", finalCount)
 		fmt.Printf("message total : %d byte\n", finalSize)
+		sub.Shutdown()
 	})
 
 	var totalCount, totalSize int64
@@ -65,8 +64,5 @@ func main() {
 		atomic.AddInt64(&finalCount, 1)
 		atomic.AddInt64(&finalSize, int64(len(m.Value)))
 	})
-
-	// wait for ever
-	select {}
 
 }
