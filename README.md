@@ -13,6 +13,8 @@ There are 2 kinds of examples in this repo:
 * Network channel for Go.
 * Pub/Sub to a distributed persisted message queue.
 
+Current examples are in Go. But more examples can be easily added by the gRPC API.
+
 ## Network Channel
 
 Originally Go has a netchan package, but it is found hard to implement. Here is just one way to implement it.
