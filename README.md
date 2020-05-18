@@ -115,8 +115,8 @@ The pub/sub example is also simple.
 
 ### Subscribe to a distributed persisted message queue
 ```
-	mc := msgclient.NewMessagingClient(strings.Split(*subBroker, ",")...)
-	sub, err := mc.NewSubscriber(*subSubscriberId, *subNamespace, *subTopic, -1, time.Now().Add(-*subStart))
+	mc := msgclient.NewMessagingClient("localhost:17777")
+	sub, err := mc.NewSubscriber("subscriber1", "ns1", "topic1", -1, time.Now())
 	if err != nil {
 		fmt.Printf("err: %v\n", err)
 		return
