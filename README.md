@@ -3,10 +3,8 @@
 SeaweedFS Messaging offers a simple message queue, which has an unlimited capacity and repeatable reads.
 
 ```
-# To start filer
-weed server -filer
-# Also start a message broker. Later it will also be included in the weed server command, so just one command shall be enough.
-weed msg.broker
+# To start message broker
+weed server -msgBroker
 ```
 
 The message queue in SeaweedFS is conceptually a remote FIFO file. It can be rewinded at any time, addressed by nano-second timestamp.
