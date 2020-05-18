@@ -51,6 +51,8 @@ var text = "..."
 
 ```
 
+Note: If the channel is closed, new writes will be rejected.
+
 ### Network Channel to read
 ```
 package main
@@ -86,10 +88,12 @@ func main() {
 
 ```
 
+Note: The data in the channel can be read multiple times.
 
 ## Pub/Sub to a distributed persisted message queue
 
-The pub/sub example is also simple.
+The pub/sub example is also simple. The difference from channel is that message queue can not be closed.
+
 ### Publish to a distributed persisted message queue
 ```
 	mc := msgclient.NewMessagingClient("localhost:17777")
@@ -127,3 +131,5 @@ The pub/sub example is also simple.
 	})
 
 ```
+
+The read can be rewinded to any timestamp.
