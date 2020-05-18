@@ -9,7 +9,7 @@ weed server -msgBroker
 
 The message queue in SeaweedFS is conceptually a remote FIFO file. It can be rewinded at any time, addressed by nano-second timestamp.
 
-the message broker uses gRPC API to stream read and write messages. More clients can be added following the [SeaweedFS messaging gRPC protobuf definition](https://github.com/chrislusf/seaweedfs/blob/master/weed/pb/messaging.proto). 
+The message broker uses gRPC API to stream read and write messages. More clients can be added following the [SeaweedFS messaging gRPC protobuf definition](https://github.com/chrislusf/seaweedfs/blob/master/weed/pb/messaging.proto). 
 
 There are 2 kinds of examples in this repo: 
 * Network channel for Go.
