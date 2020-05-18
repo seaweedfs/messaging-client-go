@@ -20,16 +20,16 @@ There are 2 kinds of examples in this repo:
 
 Originally Go has a netchan package, but it is found hard to implement. The difficulty comes when everything is decoupled in a distributed environment for high performance. Here is just one way to implement a queue of `[]byte` that has similar syntax, but with non-trivial differences. 
 
-The problems this implementation addresses are:
+This implementation has these unique features:
 * Buffered channel with almost unlimited capacity.
 * Channel addressable by a name. In a distributed environment, having a global addressable name would make computation easier.
 * Channel that can be closed. The `closed` signal means the data is sealed and complete from the publisher point of view. 
 * Channel that can be rewinded.
 
-The major difference with Go channels are:
-* The subscribing channel can decouple from the publishing channel. 
+The major differences with Go channels are:
+* The subscribing channel and the publishing channel are decopuled. They do not even need to run at the same time.
+* There can be multiple subscribing channels to read from the same publishing channel. Each subscribing channel has a full list of messages in the channel.
 * The message in the channel can be delivered multiple times.
-* There can be multiple subscribing channels to wait for the same publishing channel.
 
 For Go, the best tutorial is the source code.
 
